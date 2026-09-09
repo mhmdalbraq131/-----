@@ -99,15 +99,15 @@ class _LoginScreenState extends State<LoginScreen> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       if (widget.adminMode && _adminExists == false)
-                        const Text('لا يوجد حساب مدير بعد، سيتم إنشاؤه الآن.'),
+                        const Text('لا يوجد حساب مدير بعد، سيتم إنشاء أول حساب مدير من هنا.'),
                       if (widget.adminMode && _adminExists == false)
                         const SizedBox(height: 12),
                       const Text('اسم المستخدم'),
                       const SizedBox(height: 6),
                       TextFormField(
                         controller: _usernameController,
-                        decoration: const InputDecoration(hintText: 'username'),
-                        validator: (v) => (v == null || v.isEmpty) ? 'مطلوب' : null,
+                        decoration: const InputDecoration(hintText: 'admin'),
+                        validator: (v) => (v == null || v.trim().isEmpty) ? 'مطلوب' : null,
                       ),
                       const SizedBox(height: 12),
                       const Text('كلمة المرور'),
@@ -154,7 +154,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           },
                           child: const Text('الدخول كضيف'),
                         ),
-                        const SizedBox(height: 8),
                         TextButton(
                           onPressed: () => context.go('/register'),
                           child: const Text('إنشاء حساب جديد'),
@@ -162,6 +161,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         TextButton(
                           onPressed: () => context.go('/forgot'),
                           child: const Text('نسيت كلمة المرور؟'),
+                        ),
+                        const SizedBox(height: 8),
+                        OutlinedButton.icon(
+                          onPressed: () => context.go('/admin-login'),
+                          icon: const Icon(Icons.admin_panel_settings_outlined),
+                          label: const Text('دخول المدير'),
                         ),
                       ] else
                         TextButton(
